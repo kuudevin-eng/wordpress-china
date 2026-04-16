@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ERPNext 中国版 WebUI（多 Agent 协作）</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>ERPNext 中国版控制台</h1>
+        <p>面向中国企业：财税合规、供应链协同、移动优先</p>
+      </div>
+      <div class="top-actions">
+        <button id="syncBtn">同步 ERPNext</button>
+        <button class="ghost">切换组织</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="card metrics" aria-label="业务概览">
+        <h2>今日业务概览</h2>
+        <div class="metric-grid" id="metricGrid"></div>
+      </section>
+
+      <section class="card modules" aria-label="业务模块">
+        <h2>业务模块</h2>
+        <div class="module-grid" id="moduleGrid"></div>
+      </section>
+
+      <section class="card agents" aria-label="Agent 协作中心">
+        <div class="card-title-row">
+          <h2>Agent 协作中心</h2>
+          <span class="badge">自动分派策略：按任务标签+SLA</span>
+        </div>
+
+        <div class="agent-layout">
+          <aside class="agent-list" id="agentList"></aside>
+
+          <div class="workspace">
+            <div class="task-box">
+              <label for="taskInput">输入业务任务（支持中文自然语言）</label>
+              <textarea id="taskInput" placeholder="例如：本月增值税申报异常，请定位原因并给出修复建议"></textarea>
+              <button id="assignBtn">智能分派到 Agent</button>
+            </div>
+
+            <div class="timeline">
+              <h3>执行轨迹</h3>
+              <ul id="timeline"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <template id="timelineItemTemplate">
+      <li>
+        <strong></strong>
+        <p></p>
+        <small></small>
+      </li>
+    </template>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
