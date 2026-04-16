@@ -94,4 +94,45 @@ curl -fsSL "$CHECKSUM_URL" -o "$TARGET_DIR/${ARCHIVE_NAME}.md5"
   esac
 )
 
+if [[ "$RESOLVED_LOCALE" == "zh_CN" ]]; then
+  MU_PLUGIN_DIR="$TARGET_DIR/wordpress/wp-content/mu-plugins"
+  mkdir -p "$MU_PLUGIN_DIR"
+  cat > "$MU_PLUGIN_DIR/cn-localization-defaults.php" <<'PHP'
+<?php
+/**
+ * Plugin Name: CN Localization Defaults
+ * Description: 为中国站点提供默认本地化设置（时区与中文语言环境）。
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+add_filter(
+	'locale',
+	static function ( $locale ) {
+		if ( 'zh_CN' !== $locale ) {
+			return 'zh_CN';
+		}
+
+		return $locale;
+	}
+);
+
+add_action(
+	'init',
+	static function () {
+		if ( '' === get_option( 'timezone_string' ) ) {
+			update_option( 'timezone_string', 'Asia/Shanghai' );
+		}
+
+		if ( 0 === (int) get_option( 'gmt_offset' ) ) {
+			update_option( 'gmt_offset', '8' );
+		}
+	}
+);
+PHP
+  echo "Applied CN localization defaults: ${MU_PLUGIN_DIR}/cn-localization-defaults.php"
+fi
+
 echo "Done. Source extracted to: ${TARGET_DIR}/wordpress"
