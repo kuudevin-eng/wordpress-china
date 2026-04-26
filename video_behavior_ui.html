@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>视频行为管理系统 UI 原型</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #19202a;
+      --sub: #5b6678;
+      --primary: #2f6df6;
+      --success: #18a957;
+      --warning: #e6a300;
+      --danger: #d63b3b;
+      --line: #e5e9f2;
+      --shadow: 0 8px 24px rgba(17, 35, 75, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: #101a2f;
+      color: #dbe5ff;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 12px;
+      padding: 8px 10px;
+    }
+
+    .menu-item {
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 14px;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+      background: rgba(98, 138, 255, 0.2);
+      color: #ffffff;
+    }
+
+    .content {
+      padding: 20px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip, .btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 8px 12px;
+      border-radius: 9px;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .btn.primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    .metric {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 6px 0;
+    }
+
+    .sub {
+      color: var(--sub);
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--sub);
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .tag.high { background: #ffe3e3; color: var(--danger); }
+    .tag.mid { background: #fff2d9; color: var(--warning); }
+    .tag.low { background: #dff8e8; color: var(--success); }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .timeline-item {
+      border-left: 3px solid #d8e4ff;
+      padding-left: 10px;
+      font-size: 13px;
+      color: var(--sub);
+    }
+
+    .timeline-item strong { color: var(--text); }
+
+    .footer {
+      margin-top: auto;
+      color: var(--sub);
+      font-size: 12px;
+    }
+
+    @media (max-width: 1080px) {
+      body { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .stats { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">VideoGuard Pro</div>
+    <div class="menu-item active">行为监测总览</div>
+    <div class="menu-item">实时告警中心</div>
+    <div class="menu-item">视频源管理</div>
+    <div class="menu-item">规则引擎配置</div>
+    <div class="menu-item">事件回放检索</div>
+    <div class="menu-item">报表与导出</div>
+    <div class="menu-item">系统设置</div>
+    <div class="footer">版本 v1.0 · UI Prototype</div>
+  </aside>
+
+  <main class="content">
+    <div class="topbar">
+      <h1>视频行为管理系统</h1>
+      <div class="filters">
+        <button class="chip">区域：全部园区</button>
+        <button class="chip">时间：最近24小时</button>
+        <button class="chip">行为类型：全部</button>
+        <button class="btn">导出日报</button>
+        <button class="btn primary">新增告警规则</button>
+      </div>
+    </div>
+
+    <section class="stats">
+      <article class="card">
+        <div class="sub">实时在线摄像头</div>
+        <div class="metric">128</div>
+        <div class="sub">离线 3 台</div>
+      </article>
+      <article class="card">
+        <div class="sub">今日识别事件</div>
+        <div class="metric">2,341</div>
+        <div class="sub">较昨日 +8.7%</div>
+      </article>
+      <article class="card">
+        <div class="sub">高危行为告警</div>
+        <div class="metric" style="color: var(--danger);">37</div>
+        <div class="sub">未处理 12 条</div>
+      </article>
+      <article class="card">
+        <div class="sub">平均处置时长</div>
+        <div class="metric">4m 26s</div>
+        <div class="sub">SLA 达成率 96%</div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3 style="margin: 0 0 8px;">行为告警列表</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>时间</th>
+              <th>摄像头</th>
+              <th>行为类型</th>
+              <th>风险等级</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>09:42:17</td>
+              <td>北门-03</td>
+              <td>人员聚集异常</td>
+              <td><span class="tag high">高风险</span></td>
+              <td>待确认</td>
+              <td>查看视频</td>
+            </tr>
+            <tr>
+              <td>09:39:02</td>
+              <td>仓储A-12</td>
+              <td>越界入侵</td>
+              <td><span class="tag high">高风险</span></td>
+              <td>处理中</td>
+              <td>指派工单</td>
+            </tr>
+            <tr>
+              <td>09:35:51</td>
+              <td>办公楼-02</td>
+              <td>跌倒检测</td>
+              <td><span class="tag mid">中风险</span></td>
+              <td>已处置</td>
+              <td>查看报告</td>
+            </tr>
+            <tr>
+              <td>09:30:26</td>
+              <td>停车场-06</td>
+              <td>烟火识别</td>
+              <td><span class="tag low">低风险</span></td>
+              <td>已忽略</td>
+              <td>规则优化</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="card">
+        <h3 style="margin: 0 0 8px;">处置流转时间线</h3>
+        <div class="timeline">
+          <div class="timeline-item"><strong>09:42</strong> 触发“人员聚集异常” · 北门-03</div>
+          <div class="timeline-item"><strong>09:43</strong> 自动通知安保值班群与短信联系人</div>
+          <div class="timeline-item"><strong>09:45</strong> 值班员确认并切换到现场云台追踪</div>
+          <div class="timeline-item"><strong>09:49</strong> 完成驱散与记录，事件关闭</div>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
